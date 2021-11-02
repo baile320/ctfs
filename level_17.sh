@@ -3,7 +3,8 @@
 
 # to find password:
 # `nmap localhost -p 31000-32000` # and then paste the bandit15 password again, and server will respond with the above
-# use `openssl s_client -host localhost -port <port_from_nmap>` until you get the right combination.
+# use `openssl s_client -host localhost -port <port_from_nmap>` until you get the right combination...
+# it will output something like:
 # -----BEGIN RSA PRIVATE KEY-----
 # MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
 # imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
@@ -38,4 +39,3 @@
 # password: xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn
 
 ssh bandit17@bandit.labs.overthewire.org -p 2220
-
