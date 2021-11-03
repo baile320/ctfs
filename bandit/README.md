@@ -472,6 +472,27 @@ bandit30@bandit:/tmp/graeme30$ git show secret
 Looks suspiciously like a password! (and it is)
 
 password: `47e603bb428404d265f59c42920d81e5`
+
+## Level 31 to Level 32
+```bash
+mkdir /tmp/<somedir>/
+git clone ssh://bandit31-git@localhost/home/bandit31-git/repo /tmp/<somedir>
+less /tmp/<somedir>/README.md # doesn't seem to have much helpful info
+less README.md # this tells us what to do
+```
+
+Create a file called `key.txt` with `May I come in?` inside.
+Update `.gitignore` and delete the `*.txt` line.
+
+```bash
+git add -A
+git commit # put in some garbage message, doesn't matter
+git push origin master
+```
+
+And we get some pretty output with the password!
+
+password: `56a9bf19c63d650ce78e6ec0354ee45e`
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
