@@ -360,6 +360,24 @@ chmod 777 /var/spool/bandit24/bandit24.sh
 Then we need to wait a minute for the cron job to run, and we can collect our password: `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ`
 
 ## Level 24 to Level 25
+Time to write our first fully-fledged shell script. I had to do a little googling and reading to come up with this. First, I had four deeply nested four loops to output the pin (i.e. for i, for j, for k, for l... echo <password> $i$j$k$l. Pretty dumb.). Then, I found out you can pipe the results from a `for` loop in to `nc`. So I got the following:
+
+```bash
+for i in {0000..9999}; do
+   echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i"
+done | nc localhost 30002
+```
+
+This outputs a TON of garbage though, so a better solution would be
+```bash
+for i in {0000..9999}; do
+   echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i"
+done | nc localhost 30002 | grep -v Wrong
+```
+The `-v` flag on `grep` is pretty awesome, and I learned about it on this exercise. In our example, it returns everything that DOESN'T match `Wrong`. Cool.
+
+password: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
