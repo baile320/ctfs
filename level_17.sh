@@ -2,7 +2,7 @@
 # https://overthewire.org/wargames/bandit/bandit17.html
 
 # to find password:
-# `nmap localhost -p 31000-32000` # and then paste the bandit15 password again, and server will respond with the above
+# use `nmap localhost -p 31000-32000` to search for the open ports in the range.
 # use `openssl s_client -host localhost -port <port_from_nmap>` until you get the right combination...
 # it will output something like:
 # -----BEGIN RSA PRIVATE KEY-----
