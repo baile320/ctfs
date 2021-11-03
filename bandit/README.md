@@ -376,8 +376,36 @@ done | nc localhost 30002 | grep -v Wrong
 ```
 The `-v` flag on `grep` is pretty awesome, and I learned about it on this exercise. In our example, it returns everything that DOESN'T match `Wrong`. Cool.
 
-password: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+password: `uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG`
 
+## Level 25 to Level 26
+To be honest, I really struggled with this one. Follow [this very helpful guide](https://medium.com/@coturnix97/overthewires-bandit-25-26-shell-355d78fd2f4d)... in fact, once I got into vim, the password for bandit26 wasn't even displayed so I'm not sure if there's a bug on my side or if something else is wrong?
+
+Despite struggling with this one, there's a TON to learn while reading through the excellent write-up I linked about. I learned a lot about `vim` and `more` I had no idea about! Wow, they're powerful programs!
+
+password: `5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z`
+
+## Level 26 to Level 27
+Back to familiar territory!
+
+```bash
+ls -a # note there's a bandit27-do binary! we know what to do now!
+./bandit27-do cat /etc/bandit_pass/bandit27
+```
+
+password: `3ba3118a22e93127a4ed485be72ef5ea`
+
+## Level 27 to Level 28
+Looks like we'll need to use git to find this password.
+
+To find the password:
+```bash
+mkdir /tmp/<somedir>
+git clone ssh://bandit27-git@localhost/home/bandit27-git/repo /tmp/<somedir>
+ls -hartl /tmp/<somedir> # shows us a README
+cat /tmp/<somedir>/README
+```
+password: `0ef186ac70e04ea33b4c1853d2526fa2`
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
