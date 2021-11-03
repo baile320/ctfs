@@ -493,6 +493,15 @@ git push origin master
 And we get some pretty output with the password!
 
 password: `56a9bf19c63d650ce78e6ec0354ee45e`
+
+## Level 32 to Level 33
+This too took some googling. Apparently there's an env variable `$0` that, when executed, will get us out of the uppercase shell. It doesn't plop us into an entirely normal environment, but we are able to `cat /etc/bandit_pass/bandit33` to get the password.
+
+password: `c9c3199ddf4121b10cf581a98d51caee`
+
+## Level 33 to level 34
+Doesn't exist as of 11/03/2021. So we're done!
+
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
