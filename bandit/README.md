@@ -406,6 +406,26 @@ ls -hartl /tmp/<somedir> # shows us a README
 cat /tmp/<somedir>/README
 ```
 password: `0ef186ac70e04ea33b4c1853d2526fa2`
+
+## Level 28 to Level 29
+
+```bash
+mkdir /tmp/<somedir>/
+git clone ssh://bandit28-git@localhost/home/bandit28-git/repo /tmp/<somedir>
+less /tmp/<somedir>/README.md # doesn't seem to have much helpful info
+```
+
+Hm... Oh yeah! It's git! Let's check the commit history.
+```
+cd /tmp/<somedir>/
+git log # some very suspicious commits here. let's look at the "missing data"
+git checkout c086d11a00c0648d095d04c089786efef5e01264
+less README.md # there we go!
+```
+
+password: `bbc96594b4e001778eee9975372716b2`
+
+## Level 29 to Level 30
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
