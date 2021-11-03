@@ -426,6 +426,52 @@ less README.md # there we go!
 password: `bbc96594b4e001778eee9975372716b2`
 
 ## Level 29 to Level 30
+
+```bash
+mkdir /tmp/<somedir>/
+git clone ssh://bandit29-git@localhost/home/bandit29-git/repo /tmp/<somedir>
+less /tmp/<somedir>/README.md # doesn't seem to have much helpful info
+git log # not much helpful info here either.
+```
+
+Git also has branches though... let's check those!
+
+```bash
+git branch -r # view all the remote branches... origin/dev seems interesting?
+git checkout origin/dev
+cat README.md # get the password
+```
+
+password: `5b90576bedb2cc04c86a9e924ce42faf`
+## Level 30 to Level 31
+
+```bash
+mkdir /tmp/<somedir>/
+git clone ssh://bandit30-git@localhost/home/bandit30-git/repo /tmp/<somedir>
+less /tmp/<somedir>/README.md # doesn't seem to have much helpful info
+git log # not much helpful info here either.
+```
+
+Looking around in the `.git` folder... not much interesting in most of the files.
+
+However, we find this in .git/packed-refs:
+```
+# pack-refs with: peeled fully-peeled
+3aefa229469b7ba1cc08203e5d8fa299354c496b refs/remotes/origin/master
+f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea refs/tags/secret
+```
+
+Hm... I like secrets! Doing some googling about packed refs leads me to tags leads me to:
+
+```bash
+bandit30@bandit:/tmp/graeme30$ git tag
+secret
+bandit30@bandit:/tmp/graeme30$ git show secret
+47e603bb428404d265f59c42920d81e5
+```
+Looks suspiciously like a password! (and it is)
+
+password: `47e603bb428404d265f59c42920d81e5`
 # Things to drill down on
 1) From 20 -> 21: why can I `echo <stuff> | nc -l -p 60606`? Does it effectively run `nc -l -p 60606 -e "echo <stuff>"`? What else can I pipe to nc? nc also takes a -c/-e flag where it can accept a script or binary to run when connections are made.
 2)
