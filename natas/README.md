@@ -80,3 +80,54 @@ So, visit `http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_we
 password: `DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe`
 
 ## Level 8 to Level 9
+Again, viewing the source code shows us something interesting:
+
+```php
+<?
+
+$encodedSecret = "3d3d516343746d4d6d6c315669563362";
+
+function encodeSecret($secret) {
+    return bin2hex(strrev(base64_encode($secret)));
+}
+
+if(array_key_exists("submit", $_POST)) {
+    if(encodeSecret($_POST['secret']) == $encodedSecret) {
+    print "Access granted. The password for natas9 is <censored>";
+    } else {
+    print "Wrong secret";
+    }
+}
+?>
+```
+So it looks like we need to de-encode `3d3d516343746d4d6d6c315669563362`, and we can do that by reversing the encoding procedure above. I've never used php but it seems pretty reasonable to guess we can do: `base64_decode(strrev(hex2bin("3d3d516343746d4d6d6c315669563362")))`... I had to find an online php interpreter because I don't have php installed. but I ran:
+
+```php
+<?php
+	echo base64_decode(strrev(hex2bin("3d3d516343746d4d6d6c315669563362")))
+
+?>
+```
+
+in one of the interpreters and got the secret to be `oubWYf2kBq`.
+
+The password for the next level is: `W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl`.
+
+## Level 9 to Level 10
+I looked at the source code, and saw the following interesting line:
+
+```php
+if($key != "") {
+    passthru("grep -i $key dictionary.txt");
+}
+```
+
+Since this is grepping `$key`, I decided to be naughty and run `grep -i .* dictionary.txt` (i.e. I submitted the form with ".*"), which will dump the entirety of dictionary.txt. This didn't lead me anywhere.
+
+Then I realized that we can essentially run arbitrary commands with an injection in the following way:
+
+Submit the form with `; cat /etc/natas_webpass/natas9`. The semicolon terminates the grep command, and we know from a previous exercise where the password files are saved. Lo and behold, we get the password.
+
+password: `W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl`
+
+## Level 10 to Level 11
