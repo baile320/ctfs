@@ -126,8 +126,8 @@ Since this is grepping `$key`, I decided to be naughty and run `grep -i .* dicti
 
 Then I realized that we can essentially run arbitrary commands with an injection in the following way:
 
-Submit the form with `; cat /etc/natas_webpass/natas9`. The semicolon terminates the grep command, and we know from a previous exercise where the password files are saved. Lo and behold, we get the password.
+Submit the form with `; cat /etc/natas_webpass/natas10`. The semicolon terminates the grep command, and we know from a previous exercise where the password files are saved. Lo and behold, we get the password.
 
-password: `W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl`
+password: `nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu`
 
 ## Level 10 to Level 11
