@@ -22,7 +22,7 @@ Same as previous level. Right clicking has been disabled so use the browser tool
 password: `ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi`
 
 ## Level 2 to Level 3
-There is an img loaded from `/files/pixel.png`. I guess we should see what else is in /files/?
+There is an img loaded from `/files/pixel.png`. I guess we should see what else is in `/files/`?
 
 Visiting `http://natas2.natas.labs.overthewire.org/files/` shows us there is a `users.txt` which has the password we're looking for.
 
@@ -69,3 +69,14 @@ $secret = "FOEIUWGHFEEUHOFUOIU";
 
 Back on the original webpage, if we submit the "secret" form using the `FOEIUWGHFEEUHOFUOIU` secret, we get the password: `7z3hEENjQtflzgnT29q7wAvMNfZdh0i9`
 
+## Level 7 to Level 8
+
+I thought this level would be related to query strings because the "Home" and "About" links go to places like `http://natas7.natas.labs.overthewire.org/index.php?page=about`... I didn't know what else to do so I opened the page source and saw the following hint:
+
+`hint: password for webuser natas8 is in /etc/natas_webpass/natas8`
+
+So, visit `http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_webpass/natas8` and get the password.
+
+password: `DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe`
+
+## Level 8 to Level 9
