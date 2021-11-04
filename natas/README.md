@@ -249,4 +249,7 @@ password: `EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3`.
 
 There are a lot of good walkthroughs for this problem online. I utilized some for help because I have never used php before and was struggling a little bit with how to figure out the `$key` initially.
 
-# Level
+# Level 12 to Level 13
+Notes:
+
+1. It looks (from the source) that there's no validation that we can upload only images. So, we can probably something like a shell script that we can execute later
