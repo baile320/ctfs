@@ -250,6 +250,14 @@ password: `EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3`.
 There are a lot of good walkthroughs for this problem online. I utilized some for help because I have never used php before and was struggling a little bit with how to figure out the `$key` initially.
 
 # Level 12 to Level 13
-Notes:
 
-1. It looks (from the source) that there's no validation that we can upload only images. So, we can probably something like a shell script that we can execute later
+It looks like we can upload a file. It tells us to upload an image, but looking at the source code, there's nothing that really does any sort of validation to make sure we're uploading a valid image.
+
+1. Create a file with `<?php echo system(\"cat /etc/natas_webpass/natas13\");?>` inside. Name it `natas12.jpg`.
+2. In the dev tools inspector, find the element similar to `<input type="hidden" name="filename" value="1b9n9h0xrs.jpg">` (your "value" will be different.). Change the `.jpg` in there to `.php`.
+3. Upload your file.
+4. Follow the link the server responds with, which should show the password for level 13.
+
+password: `jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY`
+
+# Level 13 to Level 14
