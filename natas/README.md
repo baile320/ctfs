@@ -131,3 +131,12 @@ Submit the form with `; cat /etc/natas_webpass/natas10`. The semicolon terminate
 password: `nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu`
 
 ## Level 10 to Level 11
+
+Well, if you inspect the source code you'll note that we can no longer use `;`, `&`, `|`. Luckily for us, the input prompt is still vulnerable to injection, because `grep` accepts multiple files as arguments.
+
+Input into form: `.* /etc/natas_webpass/natas11`
+Gives the final command run by the server as: `grep -i .* /etc/natas_webpass/natas11 dictionary.txt`
+
+The returned info contains the `natas11` password, but it's a few lines down from the top so you'll have to examine the output to find it.
+
+password: `U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK`
