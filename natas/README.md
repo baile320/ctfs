@@ -140,3 +140,113 @@ Gives the final command run by the server as: `grep -i .* /etc/natas_webpass/nat
 The returned info contains the `natas11` password, but it's a few lines down from the top so you'll have to examine the output to find it.
 
 password: `U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK`
+
+## Level 11 to Level 12
+There's a lot of php code in this one:
+
+```php
+$defaultdata = array( "showpassword"=>"no", "bgcolor"=>"#ffffff");
+
+function xor_encrypt($in) {
+    $key = '<censored>';
+    $text = $in;
+    $outText = '';
+
+    // Iterate through each character
+    for($i=0;$i<strlen($text);$i++) {
+    $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    }
+
+    return $outText;
+}
+
+function loadData($def) {
+    global $_COOKIE;
+    $mydata = $def;
+    if(array_key_exists("data", $_COOKIE)) {
+    $tempdata = json_decode(xor_encrypt(base64_decode($_COOKIE["data"])), true);
+    if(is_array($tempdata) && array_key_exists("showpassword", $tempdata) && array_key_exists("bgcolor", $tempdata)) {
+        if (preg_match('/^#(?:[a-f\d]{6})$/i', $tempdata['bgcolor'])) {
+        $mydata['showpassword'] = $tempdata['showpassword'];
+        $mydata['bgcolor'] = $tempdata['bgcolor'];
+        }
+    }
+    }
+    return $mydata;
+}
+
+function saveData($d) {
+    setcookie("data", base64_encode(xor_encrypt(json_encode($d))));
+}
+
+$data = loadData($defaultdata);
+
+if(array_key_exists("bgcolor",$_REQUEST)) {
+    if (preg_match('/^#(?:[a-f\d]{6})$/i', $_REQUEST['bgcolor'])) {
+        $data['bgcolor'] = $_REQUEST['bgcolor'];
+    }
+}
+
+saveData($data);
+```
+
+Notable things:
+
+1. The cookie we're loading is `ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSRwh6QUcIaAw`.
+2. Presumably our goal is for `$defaultdata = array( "showpassword"=>"yes", "bgcolor"=>"#ffffff");`
+3. We need to do some reading on XOR encryption.
+   1. Wikipedia says: "To decrypt the output, merely reapplying the XOR function with the key will remove the cipher."
+4. We need to figure out what the `$key` is in `xor_encrypt`.
+   1. `saveData` gets called on `$data` which is set by `loadData` which is run on `$defaultdata` which is the array struct from above.
+   2. `saveData` sets the cookie to `base64_encode(xor_encrypt(json_encode($d)))` which leads me to believe `$key` is actually just the json encoded array above.
+
+Following those hints, we can run the following code which will give us the `$key`:
+```php
+<?php
+
+function xor_encrypt($in) {
+    $key = json_encode(array( "showpassword"=>"no", "bgcolor"=>"#ffffff"));
+    $outText = '';
+    for ($i = 0; $i < strlen($in); $i++) {
+        $outText .= $in[$i] ^ $key[$i % strlen($key)];
+    }
+    return $outText;
+}
+
+echo xor_encrypt(base64_decode("ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSRwh6QUcIaAw"));
+
+?>
+```
+
+output: `qw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jq`
+
+Now, this is clearly `qw8J` repeated, which has to do with how XOR operates when the key is shorter than the text to encrypt.
+
+So, let's put that key into the code:
+
+```php
+<?php
+
+function xor_encrypt($in) {
+    $key = 'qw8J';
+    $outText = '';
+    for ($i = 0; $i < strlen($in); $i++) {
+        $outText .= $in[$i] ^ $key[$i % strlen($key)];
+    }
+    return $outText;
+}
+
+echo base64_encode(xor_encrypt(json_encode(array("showpassword" => "yes", "bgcolor"=>"#ffffff"))));
+
+?>
+```
+
+cookie: `ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK`.
+
+Set the cookie to this value (I used Burp) and voila.
+
+password: `EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3`.
+
+There are a lot of good walkthroughs for this problem online. I utilized some for help because I have never used php before and was struggling a little bit with how to figure out the `$key` initially.
+
+# Level
