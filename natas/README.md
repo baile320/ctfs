@@ -1,7 +1,7 @@
 # Solutions
 **THERE ARE SPOILERS AHEAD.**
 
-These are my full solutions to the [natas](http://overthewire.org/wargames/natas/) ctf wargame.
+These are my solutions to the [natas](http://overthewire.org/wargames/natas/) ctf wargame. The portions where I don't have anything really interesting to note are rather terse. There are many good, full guides online for these problems.
 
 ## Level 0 to Level 1
 Log in to level 0 with the following:
