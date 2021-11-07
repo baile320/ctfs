@@ -57,4 +57,5 @@ So, we know 'a' -> 'M', 'b' -> 'N' ... etc. If you could count and that's a 12 l
 cat /krypton/krypton2/krypton3 | tr '[M-ZA-L][m-za-l]' '[A-Za-z]' # outputs CAESARISEASY
 ```
 
-
+## Level 3 to Level 4
+Idea: since we have multiple files, maybe we can use frequency analysis to identify what 'e' (or another common letter) is mapped to, and since these are (presumably?) another rotation cipher, we can figure out the key mapping
