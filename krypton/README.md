@@ -29,3 +29,32 @@ cat /krypton/krypton1/krypton2 | tr '[a-z][A-Z]' '[n-za-m][N-ZA-M]'
 ```
 
 Lucky guess! That outputs: `LEVEL TWO PASSWORD ROTTEN`.
+
+## Level 2 to Level 3
+There's lots more stuff in `/krypton/krypton2/` this time.
+
+The readme gives us several hints
+
+```bash
+mktemp -d # this outputs a directory which we should shift to in the next command
+cd /tmp/tmp.szPPV2wUhq # directory from previous command
+ln -s /krypton/krypton2/keyfile.dat
+chmod 777 .
+/krypton/krypton2/encrypt /etc/issue # this encrypts /etc/issue and puts it in a file called ciphertext in the current directory
+```
+
+We know this is a standard, constant shifted ciphertext because the `README` told us that. Therefore, to be really clever, we only need to translate the character `a` and see what it gets shifted to, and then we know the entire shift. Just for sanity, I'll translate the entire alphabet.
+
+```bash
+echo 'abcdefghijklmnopqrstuvwxyz' > file.txt
+/krypton/krypton2/encrypt file.txt
+cat ciphertext # outputs: MNOPQRSTUVWXYZABCDEFGHIJKL
+```
+
+So, we know 'a' -> 'M', 'b' -> 'N' ... etc. If you could count and that's a 12 letter rotation. We can use a similar trick to the last solution to translate the password now.
+
+```bash
+cat /krypton/krypton2/krypton3 | tr '[M-ZA-L][m-za-l]' '[A-Za-z]' # outputs CAESARISEASY
+```
+
+
