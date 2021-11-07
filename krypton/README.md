@@ -51,7 +51,7 @@ echo 'abcdefghijklmnopqrstuvwxyz' > file.txt
 cat ciphertext # outputs: MNOPQRSTUVWXYZABCDEFGHIJKL
 ```
 
-So, we know 'a' -> 'M', 'b' -> 'N' ... etc. If you could count and that's a 12 letter rotation. We can use a similar trick to the last solution to translate the password now.
+So, we know 'a' -> 'M', 'b' -> 'N' ... etc. If you could count and that's a 12 letter rotation (plus a case swap). We can use a similar trick to the last solution to translate the password now.
 
 ```bash
 cat /krypton/krypton2/krypton3 | tr '[M-ZA-L][m-za-l]' '[A-Za-z]' # outputs CAESARISEASY
