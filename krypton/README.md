@@ -58,4 +58,17 @@ cat /krypton/krypton2/krypton3 | tr '[M-ZA-L][m-za-l]' '[A-Za-z]' # outputs CAES
 ```
 
 ## Level 3 to Level 4
-Idea: since we have multiple files, maybe we can use frequency analysis to identify what 'e' (or another common letter) is mapped to, and since these are (presumably?) another rotation cipher, we can figure out the key mapping
+My original thought was to do [frequency analysis](https://en.wikipedia.org/wiki/Frequency_analysis) to find the most common letters in the "foundX" files. In English, "E" is most common, followed by "T", "A", etc. So there's a good chance the most common letter in "foundX" are also the most common letters in English, and then we can use that mapping to translate the password.
+
+```bash
+sed 's/./&\n/g' found1 found2 found3 | sort | uniq -ic # counts the letters in the file. found here: https://askubuntu.com/questions/593383/how-to-count-occurrences-of-each-character
+```
+
+Looking through the output, `S` has 456 occurrences. That's a good candidate for the mapping of `E`. Next is `Q` with 340.
+
+I'm really curious if there's a good way to solve this besides brute force. I even tried several tools like JCrypTool and some online sites to make this easier but just got a huge mess.
+
+[This site](https://quipqiup.com/) seems to give us exactly the answer we want. Upload all of the files (see [my file here](./krypton4_texts.txt)). The answer it gives is: `the level four password is brute` (actually, the password is `BRUTE`).
+
+## Level 4 to Level 5
+
