@@ -345,3 +345,26 @@ See the script [here](./natas16.py).
 password: `8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw`
 
 ## Level 17 to Level 18
+I was really unsure how to approach this problem, but after some googling (cheating, in this case!!) I found two different solutions
+
+1. "Dumb" solution: use sql injection to force the request to sleep. We can time the request, and if the request takes a long time when we know the user was found. This approach is haphazard and potentially fraught with errors (what if the server just responds slowly? we'll get a false positive. It's unlikely but it could happen).
+2. "Smart" solution: Use a tool called `sqlmap` which will dump the entire sql database table to us.
+
+Of course, there's not *really* a smart and dumb solution. They both have tradeoffs that need to be considered. Since we've already done some SQL injections in the previous exercises, I wanted to give `sqlmap` a try because it's cool to have more tools in your tool kit. A downside is that it is a black box (unless you read the source code) so we don't *really* know what it's doing under the covers. C'est la vie!
+
+```bash
+sqlmap -u "http://natas17.natas.labs.overthewire.org/index.php" \
+--data=username=natas18 \
+--auth-type=basic \
+--auth-cred=natas17:8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw \
+--level=5 --risk=3 \
+--dbms=mysql \
+-D natas17 \
+-T users \
+--dump
+```
+
+Whew, that took forever. Lessons learned: cheating doesn't always win (I heavily utilized [this blog post](https://medium.com/hacker-toolbelt/natas-17-blind-sql-injection-with-sqlmap-1e775e937055)) because, guess what? `sqlmap` just ended up using a timing attack, which is what our "dumb" version would have done. It ran for about 50 minutes on my computer. Yikes!
+
+Password: `xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP`
+
