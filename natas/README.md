@@ -327,7 +327,7 @@ So, we'll write a little script to do that for us. See [here](./natas15.py)
 
 password: `WaIHEacj63wnNIBROHeqi3p9t0m5nhmh`
 
-## Level 16 -> Level 17
+## Level 16 to Level 17
 This is kinda similar to the last one, but instead we'll need to use subshells to query, since certain characters are not allowed to be searched on (whoever built the website is nicely allowing us to use `$()`!)
 
 Basically, we can do the following:
@@ -336,8 +336,12 @@ Basically, we can do the following:
 somethings$(grep <char> /etc/natas_webpass/natas17)
 ```
 
-If `somethings` is returned by the API then `<char>` is part of the password. We can use this to build up a dictionary of potential letters, similar to the last stage.
+If `somethings` is returned by the API then `<char>` is not part of the password (i.e. `grep` returns `<char>` and `somethings<char>` is of course not a real word). We can use this to build up a dictionary of potential letters, similar to the last stage.
 
 After we've narrowed down the alphabet, we can `grep ^<potential_password> /etc/natas_webpass/natas17` which allows us to test the password as we build it up with various probe characters.
 
-TODO: complete this exercise
+See the script [here](./natas16.py).
+
+password: `8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw`
+
+## Level 17 to Level 18
