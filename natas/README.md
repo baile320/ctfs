@@ -311,4 +311,18 @@ The way we accomplish that is by inputting the following into the username text 
 password: `AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J`
 
 ## Level 15 to Level 16
+This one looks a little trickier. The only input we can get back is "This user exists." or "This user doesn't exist."... I guess what we have to do is modify the SQL query from:
 
+```sql
+SELECT * from users where username="<some_username>";
+```
+
+to something like:
+
+```sql
+SELECT * FROM users WHERE username="<some_username>" AND password LIKE "<something>";
+```
+
+So, we'll write a little script to do that for us. See [here](./natas15.py)
+
+password: `WaIHEacj63wnNIBROHeqi3p9t0m5nhmh`
