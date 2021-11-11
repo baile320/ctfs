@@ -261,3 +261,19 @@ It looks like we can upload a file. It tells us to upload an image, but looking 
 password: `jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY`
 
 # Level 13 to Level 14
+Looks like we can upload a file again. This time there's more checking to make sure the file is a valid image. It uses the php function `exif_imagetype`. Luckily, after some googling to try and understand this php function and whether it's possible to fake it out, it looks like there's a [valid way to inject php into image files](https://onestepcode.com/injecting-php-code-to-jpg/). I tried following the directions in that link but ran into some issues.
+
+I did some more googling and found that there are ["magic bytes"](https://stackoverflow.com/questions/18357095/how-to-bypass-the-exif-imagetype-function-to-upload-php-code) that tell `exif_imagetype` if something is an image. So, let's do the following:
+
+```bash
+echo -e "\xff\xd8\xff" > natas13.jpg
+cat natas13.jpg natas13.php > natas13_inject.php
+```
+
+Then follow the same procedure as last time to upload the file to allow it to become executable php.
+
+password: `Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1`
+
+## Level 14 -> Level 15
+
+
