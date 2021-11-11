@@ -275,5 +275,40 @@ Then follow the same procedure as last time to upload the file to allow it to be
 password: `Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1`
 
 ## Level 14 -> Level 15
+This looks interesting! A login submission form.
 
+When inspecting the source, I honed in on this pretty quickly:
+
+```php
+$query = "SELECT * from users where username=\"".$_REQUEST["username"]."\" and password=\"".$_REQUEST["password"]."\"";
+if(array_key_exists("debug", $_GET)) {
+   echo "Executing query: $query<br>";
+}
+
+if(mysql_num_rows(mysql_query($query, $link)) > 0) {
+   echo "Successful login! The password for natas15 is <censored><br>";
+} else {
+   echo "Access denied!<br>";
+}
+```
+
+And what I see here is some unchecked SQL. It's only looking to see if any rows are returned, so as long as we can modify the query it's running with our inputs, we should be able to force it to always return a result and give us the password.
+
+Basically, we'll transform the SQL query from this:
+
+```sql
+SELECT * from users where username="<some_username>" and password="<some_password>"
+```
+
+to this:
+
+```sql
+SELECT * from users where username="<some_username>"
+```
+
+The way we accomplish that is by inputting the following into the username text box: `natas15"#`. The quote terminates the string because the hash symbol turns everything following it into a comment (including the terminating quotation).
+
+password: `AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J`
+
+## Level 15 to Level 16
 
