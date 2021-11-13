@@ -383,3 +383,29 @@ As an example, I got the following cookie: `Cookie: PHPSESSID=3533302d74657374`.
 And, we do. See my [python code](./natas19.py). And notice I learned a new trick! It runs multiple threads at a time to speed up the process :).
 
 password: `eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF`
+
+## Level 20 to level 21
+Initial thoughts... this part is super sus:
+
+```php
+function mywrite($sid, $data) {
+    // $data contains the serialized version of $_SESSION
+    // but our encoding is better
+    debug("MYWRITE $sid $data");
+    // make sure the sid is alnum only!!
+    if(strspn($sid, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-") != strlen($sid)) {
+    debug("Invalid SID");
+        return;
+    }
+    $filename = session_save_path() . "/" . "mysess_" . $sid;
+    $data = "";
+    debug("Saving in ". $filename);
+    ksort($_SESSION);
+    foreach($_SESSION as $key => $value) {
+        debug("$key => $value");
+        $data .= "$key $value\n";
+    }
+    file_put_contents($filename, $data);
+    chmod($filename, 0600);
+}
+```
