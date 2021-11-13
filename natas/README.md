@@ -376,3 +376,10 @@ See the [python code](./natas18.py) I used to accomplish this.
 password: `4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs`
 
 ## Level 19 to Level 20
+This time the site tells us the cookies aren't sequential, but otherwise the code is the "mostly the same".
+
+As an example, I got the following cookie: `Cookie: PHPSESSID=3533302d74657374`. Pretty nasty. Brute forcing is probably out of the question. It looks like hex, so I thought I'd try to decode to ascii and this is what I got: `530-test`. `test` was the username I used in the form to attempt to log in. So... this seems pretty similar to the last level with a hex encoded thing so we should hex encode `<some_num>-admin` and we'll probably get it.
+
+And, we do. See my [python code](./natas19.py). And notice I learned a new trick! It runs multiple threads at a time to speed up the process :).
+
+password: `eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF`
