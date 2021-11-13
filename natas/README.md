@@ -368,3 +368,11 @@ Whew, that took forever. Lessons learned: cheating doesn't always win (I heavily
 
 Password: `xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP`
 
+## Level 18 to Level 19
+The big indication for this level is that there are only 640 session IDs available. There's no real way for us to "log in" as admin, but we can brute force check all of the session IDs by setting the cookies to each one until we find the admin session.
+
+See the [python code](./natas18.py) I used to accomplish this.
+
+password: `4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs`
+
+## Level 19 to Level 20
