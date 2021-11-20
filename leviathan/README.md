@@ -183,3 +183,28 @@ UgaoFee4li
 
 password: `UgaoFee4li`
 
+## Level 6 to Level 7
+ANOTHER `setuid` binary.
+
+This one takes a four digit number. We're gonna be super lazy and write a for-loop to try them all.
+
+```bash
+for i in {0001..9999}
+do
+    ltrace ./leviathan6 $i >> /tmp/somedir6/6
+done
+```
+
+This stops running at `7123` with an indication that we are running a shell. Cool!
+
+```bash
+leviathan6@leviathan:~$ ./leviathan6 7123
+$ whoami
+leviathan7
+$ cat /etc/leviathan_pass/leviathan7
+ahy7MaeBo9
+```
+
+password: `ahy7MaeBo9`
+
+## Level 7 to Level 8
