@@ -103,3 +103,23 @@ password: `Ahdiemoo1j`
 There's also a slightly more in depth trick utilizing symlinks that can be found by googling for the solution to this level. I like my solution :).
 
 ## Level 3 to Level 4
+Now we have an executable file called `level3` that prompts us for a password when we execute it. This level is pretty easy since we know about `ltrace`. It tells us that the password we need to enter to the binary is `snlprintf` (look at the `strcmp` below):
+
+```bash
+leviathan3@leviathan:~$ ltrace ./level3
+__libc_start_main(0x8048618, 1, 0xffffd784, 0x80486d0 <unfinished ...>
+strcmp("h0no33", "kakaka")                                      = -1
+printf("Enter the password> ")                                  = 20
+fgets(Enter the password> dumb
+"dumb\n", 256, 0xf7fc55a0)                                = 0xffffd590
+strcmp("dumb\n", "snlprintf\n")                                 = -1
+puts("bzzzzzzzzap. WRONG"bzzzzzzzzap. WRONG
+)                                      = 19
++++ exited (status 0) +++
+```
+
+Utilizing that password gives us the `leviathan4` shell from which we can `cat /etc/leviathan_pass/leviathan4`.
+
+password: `vuH0coox6m`
+
+## Level 4 to Level 5
