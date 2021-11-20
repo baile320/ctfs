@@ -123,3 +123,19 @@ Utilizing that password gives us the `leviathan4` shell from which we can `cat /
 password: `vuH0coox6m`
 
 ## Level 4 to Level 5
+No executable this time. This time we find a `.trash` directory. Let's go dumpster diving! Inside `./trash` we see a binary called `bin`. Running it gives binary output.
+
+```bash
+leviathan4@leviathan:~/.trash$ ./bin
+01010100 01101001 01110100 01101000 00110100 01100011 01101111 01101011 01100101 01101001 00001010
+```
+
+Let's convert it to an ascii string and see what happens. I just threw the output into [this converter](https://www.binaryhexconverter.com/binary-to-ascii-text-converter) and got the output: `Tith4cokei`.
+
+Lucky us, that's the password!
+
+password: `Tith4cokei`
+
+## Level 5 to Level 6
+
+
