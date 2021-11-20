@@ -11,4 +11,4 @@ See the [natas readme](./natas/README.md). In progress.
 See the [krypton readme](./krypton/README.md). In progress.
 
 ## Leviathan
-See the [leviathan readme](./leviathan/README.md). In progress.
+See the [leviathan readme](./leviathan/README.md). Completed as of 11/20/2021.

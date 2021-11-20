@@ -208,3 +208,4 @@ ahy7MaeBo9
 password: `ahy7MaeBo9`
 
 ## Level 7 to Level 8
+There's just a `CONGRATULATIONS` file here telling us we've completed the challenge. Woohoo!
