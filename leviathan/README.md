@@ -7,7 +7,7 @@ There are also a lot of good resources online for this war game in case you get 
 
 
 ## Level 0
-Log in with the username and password `leviathan0` given to us by the prompt.
+We log in with the username and password `leviathan0` given to us by the prompt.
 
 ## Level 0 to Level 1
 Taking a look around on the server, this CTF seems to be structured similarly to the `bandit` other wargames that have passwords in `/etc/leviathan_pass/<password_file>`. Unfortunately, we can't read the `/etc/leviathan_pass/leviathan1` file.
@@ -25,7 +25,7 @@ drwxr-x---  2 leviathan1 leviathan0 4.0K Aug 26  2019 .backup
 drwxr-xr-x  3 root       root       4.0K Aug 26  2019 .
 ```
 
-I took a look in `.profile`, `.bashrc`, `.bash_logout` and didn't see anything that stood out. `.backup` looks suspicious though. Inside that hidden directory, it has 1 file, `bookmarks.html` which is absolutely full of junk. Going out on a limb, I'm gonna `cat bookmarks.html | grep leviathan` and hope for the best. Lo and behold, I am rewarded with the following:
+If we take a look in `.profile`, `.bashrc`, `.bash_logout`, we don't really see anything that stands out. `.backup` looks suspicious though. Inside that hidden directory, it has 1 file, `bookmarks.html` which is absolutely full of junk. Let's go out on a limb and try `cat bookmarks.html | grep leviathan` and hope for the best. Lo and behold, we are rewarded with the following:
 
 ```
 <DT><A HREF="http://leviathan.labs.overthewire.org/passwordus.html | This will be fixed later, the password for leviathan1 is rioGegei8m" ADD_DATE="1155384634" LAST_CHARSET="ISO-8859-1" ID="rdf:#$2wIU71">password to leviathan1</A>
@@ -51,9 +51,9 @@ It's a `setuid` binary which means that, if we can run it, it will run as the `l
 
 When we try to run it, it prompts us for a password. The current level's password does not work.
 
-Going out on a limb, I looked through `strings check` to see if anything stood out. There were a few things that looked like they may have been passwords, but nothing worked.
+Going out on a limb again, let's look through `strings check` to see if anything stands out. There are a few things that looked like they may have been passwords, but none of them work if we try.
 
-I'm getting really desperate now and running `cat check`... on a binary file!? Yes. Scanning through, I see a LOT of garbage, but a few interesting words pop up. `sex`, `god`, `love`.
+We're gonna get really desperate now and run `cat check`... on a binary file!? Yes. Scanning through, we see a LOT of garbage, but a few interesting words pop up. `sex`, `god`, `love`.
 
 Running `check` and inputting `sex` for the password gives us a new prompt! Running `whoami` tells us that we are now `leviathan2`. Awesome. Time to get the password from `/etc/leviathan_pass/leviathan2`
 
@@ -62,7 +62,7 @@ password: `ougahZi8Ta`
 ## Level 2 to Level 3
 Looking inside here, we again see a `setuid` binary called `printfile`. Running `printfile` alerts us to the fact that we need to give it a `filename` argument. Running `./printfile /etc/leviathan_pass/leviathan3` tells us that "cant have that file...". Hmm. `strings` and `cat` are no help here.
 
-I had to do some googling for this one, and I found out about the `ltrace` command.
+I had to do some googling for this one, and I found out about the `ltrace` command, which allows us to see what calls are made when we run a binary, like so:
 
 ```bash
 leviathan2@leviathan:~$ ltrace ./printfile /etc/leviathan_pass/leviathan3
@@ -104,7 +104,7 @@ There's also a slightly more in depth trick utilizing symlinks that can be found
 
 ## Level 3 to Level 4
 Now we have an executable file called `level3` that prompts us for a password when we execute it. This level is pretty easy since we know about `ltrace`. It tells us that the password we need to enter to the binary is `snlprintf` (look at the `strcmp` below):
-
+ i
 ```bash
 leviathan3@leviathan:~$ ltrace ./level3
 __libc_start_main(0x8048618, 1, 0xffffd784, 0x80486d0 <unfinished ...>
