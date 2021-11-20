@@ -91,3 +91,8 @@ Inputting the password file and decoding
 password: `CLEARTEXT`.
 
 ## Level 5 to Level 6
+We're just gonna use [dcode](https://www.dcode.fr/vigenere-cipher) again on this one. Input one of the texts into the input box. Toggle 'VIGENERE CRYPTANALYSIS (KASISKI'S TEST)' and click 'decrypt'. This suggests the likely keylengths are 3, 6, or 9. Toggle 'KNOWING THE KEY-LENGTH/SIZE, NUMBER OF LETTERS:' and enter 3, 6, 9 in succession. Basically, I scrolled through the various 'decodings' until I found one that was entirely english. The key was `KEYLENGTH`.
+
+password: `RANDOM`
+
+## Level 6 to Level 7
