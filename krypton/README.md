@@ -83,3 +83,11 @@ should reveal the 1st letter of the key, in this case.  Treat this as
 
 Persistence and some good guesses are the key!
 ```
+
+I'm gonna be honest, I'm not super into guessing for these CTF challenges. [dcode](https://www.dcode.fr/vigenere-cipher) has a vignere cipher cracker that we can use. Input the text from one of the password files, input the key length of 6, and it will spit out the decoder key: `FREKEY`.
+
+Inputting the password file and decoding
+
+password: `CLEARTEXT`.
+
+## Level 5 to Level 6
