@@ -68,7 +68,18 @@ Looking through the output, `S` has 456 occurrences. That's a good candidate for
 
 I'm really curious if there's a good way to solve this besides brute force. I even tried several tools like JCrypTool and some online sites to make this easier but just got a huge mess.
 
-[This site](https://quipqiup.com/) seems to give us exactly the answer we want. Upload all of the files (see [my file here](./krypton4_texts.txt)). The answer it gives is: `the level four password is brute` (actually, the password is `BRUTE`).
+[This site](https://quipqiup.com/) seems to give us exactly the answer we want. Upload all of the files (see [my file here](./krypton3_texts.txt)). The answer it gives is: `the level four password is brute` (actually, the password is `BRUTE`).
 
 ## Level 4 to Level 5
 
+
+We're given the following hint:
+
+```
+Frequency analysis will still work, but you need to analyse it
+by "keylength".  Analysis of cipher text at position 1, 6, 12, etc
+should reveal the 1st letter of the key, in this case.  Treat this as
+6 different mono-alphabetic ciphers...
+
+Persistence and some good guesses are the key!
+```
