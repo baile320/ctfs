@@ -12,3 +12,6 @@ See the [krypton readme](./krypton/README.md). In progress.
 
 ## Leviathan
 See the [leviathan readme](./leviathan/README.md). Completed as of 11/20/2021.
+
+## Narnia
+See the [narnia readme](./narnia/README.md). In Progress.
